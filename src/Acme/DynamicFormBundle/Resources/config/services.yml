@@ -1,0 +1,11 @@
+parameters:
+#    acme_dynamic_form.example.class: Acme\DynamicFormBundle\Example
+
+services:
+#    acme_dynamic_form.example:
+#        class: %acme_dynamic_form.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+  services.formbuilder:
+    class: Acme\DynamicFormBundle\Services\Form\FormBuilder
+    arguments: [@form.factory]
+
