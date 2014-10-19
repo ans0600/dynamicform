@@ -8,21 +8,40 @@
 
 namespace Acme\DynamicFormBundle\Services\Form;
 
+use Acme\DynamicFormBundle\Entity\Field;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FormComponentText extends BaseFormComponent {
 
     const FIELD_TYPE="text";
 
-    private $fieldName;
 
-    public function __construct($fieldName)
+    public function __construct(Field $f)
     {
-        $this->fieldName=$fieldName;
+        $this->fieldName=$f->getFieldName();
+        $this->fieldLabel=$f->getFieldLabel();
+        $this->constraints=$f->getConstraints();
     }
 
     public function add(FormBuilderInterface $fb)
     {
-        return $fb->add($this->fieldName,self::FIELD_TYPE);
+        $constraintsObj=array();
+
+        if(count($this->constraints)>0)
+        {
+            foreach($this->constraints as $c)
+            {
+                $constraintsObj[]=$c->getConstraintObject();
+            }
+        }
+
+        return $fb->add($this->fieldName,
+            self::FIELD_TYPE,
+            array(
+                'label'=>$this->getFieldLabel(),
+                'constraints'=>$constraintsObj,
+                //'required'=>false
+            )
+        );
     }
 }

@@ -9,3 +9,7 @@ services:
     class: Acme\DynamicFormBundle\Services\Form\FormBuilder
     arguments: [@form.factory]
 
+  repo.form:
+    class: Acme\DynamicFormBundle\Repository\Form\FormRepository
+    arguments: [@doctrine]
+
