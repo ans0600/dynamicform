@@ -36,6 +36,14 @@ class Form {
      * @ORM\OneToMany(targetEntity="Field", mappedBy="form")
      */
     protected $fields;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="FormData", mappedBy="form")
+     **/
+    protected $formData;
+
+
     /**
      * Constructor
      */
@@ -108,5 +116,28 @@ class Form {
     public function getFields()
     {
         return $this->fields;
+    }
+
+    /**
+     * Set formData
+     *
+     * @param \Acme\DynamicFormBundle\Entity\FormData $formData
+     * @return Form
+     */
+    public function setFormData(\Acme\DynamicFormBundle\Entity\FormData $formData = null)
+    {
+        $this->formData = $formData;
+
+        return $this;
+    }
+
+    /**
+     * Get formData
+     *
+     * @return \Acme\DynamicFormBundle\Entity\FormData 
+     */
+    public function getFormData()
+    {
+        return $this->formData;
     }
 }
