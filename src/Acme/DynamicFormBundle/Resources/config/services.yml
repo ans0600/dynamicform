@@ -1,26 +1,14 @@
 parameters:
-#    acme_dynamic_form.example.class: Acme\DynamicFormBundle\Example
+
+  dataGridTemplateName: AcmeDynamicFormBundle:Datagrid:blocks.html.twig
 
 services:
-#    acme_dynamic_form.example:
-#        class: %acme_dynamic_form.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
-
   acme.twig.datagrid_extension:
     class: Acme\DynamicFormBundle\Twig\Extension\DataGridExtension
     calls:
       - [setTemplateName, [%dataGridTemplateName%]]
     tags:
       - { name: twig.extension }
-
-  services.formbuilder:
-    class: Acme\DynamicFormBundle\Services\Form\FormBuilder
-    arguments: [@form.factory]
-
-  repo.form:
-    class: Acme\DynamicFormBundle\Repository\Form\FormRepository
-    arguments: [@doctrine]
-
 
   services.datagrid.entity_service:
     class: Acme\DynamicFormBundle\Services\DataGrid\EntityService
