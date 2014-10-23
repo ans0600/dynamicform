@@ -28,7 +28,7 @@ class DataGridService {
 
   }
 
-  public function getDataGrid($entityName,$currentPage=1,$currentLimit=10)
+  public function getDataGrid($entityName,$currentPage=1,$currentLimit=10,$orderBy,$dir)
   {
    $this->entityService->init($entityName);
 
@@ -40,7 +40,7 @@ class DataGridService {
 
 
     $this->fields=$this->entityService->getFieldMetadata();
-    $this->entityService->loadData($currentPage,$currentLimit);
+    $this->entityService->loadData($currentPage,$currentLimit,$orderBy,$dir);
     $this->data=$this->entityService->toSimpleArray();
 
     return $this;
@@ -77,6 +77,20 @@ class DataGridService {
   {
     return $this->currentLimit;
   }
+
+    public function getLimits()
+    {
+        $arr=array(10,20,50,100);
+
+        $res=array();
+
+        foreach($arr as $r)
+        {
+            $res[$r]=$this->currentLimit==$r;
+        }
+        return $res;
+
+    }
 
 
 

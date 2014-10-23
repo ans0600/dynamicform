@@ -2,11 +2,15 @@ var dataGrid= {
 
   currentPage:1,
   limit:10,
+    order:null,
+    dir:"desc",
 
 
   buildQueryStr: function()
   {
-    return "?page="+this.currentPage+"&limit="+this.limit;
+    var url= "?page="+this.currentPage+"&limit="+this.limit;
+      if(this.order&&this.dir)url+="&orderBy="+this.order+"&dir="+this.dir;
+      return url;
   },
 
   isEnterKey: function(event)
@@ -48,6 +52,33 @@ var dataGrid= {
     console.log("Go To Page!!");
 
     window.location=currentUrl+this.buildQueryStr();
+  },
+
+  changeLimit: function(limit)
+  {
+      this.limit=limit;
+      var currentUrl=window.location.pathname;
+
+      currentUrl=currentUrl.split("?")[0];
+      console.log("changeLimit!!");
+
+      window.location=currentUrl+this.buildQueryStr();
+  },
+
+  orderBy: function(order)
+  {
+
+      this.order=order;
+
+      console.log(this.dir+" "+this.order);
+
+      var currentUrl=window.location.pathname;
+
+      currentUrl=currentUrl.split("?")[0];
+      console.log("GOrder By!!");
+
+      window.location=currentUrl+this.buildQueryStr();
+
   }
 
 }

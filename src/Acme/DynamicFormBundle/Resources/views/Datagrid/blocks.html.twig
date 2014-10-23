@@ -1,9 +1,9 @@
 {% block grid %}
 
 
-<div>
+<div class="row">
 
-  <table>
+  <table class="table">
     <tr>{{ datagrid_header(dg) }}</tr>
     {{ datagrid_rows(dg)}}
   </table>
@@ -21,12 +21,13 @@
 {% block grid_rows %}
 
 {% for row in rowData %}
-
-  <tr>
-    {% for col in row %}
-      <td>{{ col }}</td>
-    {% endfor %}
-  </tr>
+    <tbody>
+      <tr>
+        {% for col in row %}
+          <td>{{ col }}</td>
+        {% endfor %}
+      </tr>
+    </tbody>
 
 {% endfor %}
 
@@ -34,14 +35,16 @@
 
 
 {% block grid_header %}
-
+    <thead>
   {% for h in headerData %}
 
-    <th>
-      {{ h.fieldName }}
-    </th>
+        <th onclick="return dataGrid.orderBy('{{ h.fieldName }}')">
+          {{ h.fieldName }}
+        </th>
+
 
   {% endfor %}
+    </thead>
 
 {% endblock grid_header %}
 
@@ -55,7 +58,6 @@
 
   <div>
 
-
     <span>{{ total }} Results</span>
     <span>
       Page
@@ -64,14 +66,18 @@
       <input type="button" value=">" onclick=" return dataGrid.goToNextPage() ">
       of <span>{{ totalPages }}</span>
     </span>
-    {#<p>#}
-      {#Display#}
-      {#<select>#}
-        {#<option va></option>#}
-        {##}
-      {#</select>#}
-      {##}
-    {#</p>#}
+    <span>
+      Display
+      <select onchange="return dataGrid.changeLimit(this.value)">
+
+          {% for limit,selected in limitList %}
+
+              <option value="{{ limit }}" {{  selected? 'selected="selected"':'' }}" >{{ limit }}</option>
+          {% endfor %}
+
+      </select>
+
+    </span>
 
 
   </div>

@@ -61,15 +61,21 @@ class EntityService {
 
   }
 
-  public function loadData($page=1,$limit=100)
+  public function loadData($page=1,$limit=100,$orderBy,$dir)
   {
     /**
      * @var $em \Doctrine\ORM\EntityManager
      */
     $em=$this->doctrine->getManager();
 
+    $orderCriteria=array();
+      if($orderBy&&$dir)
+      {
+          $orderCriteria=array($orderBy=>$dir);
+      }
 
-    $this->entityData=$em->getRepository($this->className)->findBy(array(),array(),$limit,($page-1)*$limit);
+    $this->entityData=$em->getRepository($this->className)
+        ->findBy(array(),$orderCriteria,$limit,($page-1)*$limit);
 
 
     return $this->entityData;

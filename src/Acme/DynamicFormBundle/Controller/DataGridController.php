@@ -13,8 +13,9 @@ class DataGridController extends Controller
     {
       $page=$request->query->get('page')?$request->query->get('page'):1;
       $limit=$request->query->get('limit')?$request->query->get('limit'):10;
-
-      $dataGrid=$this->get('service.datagrid.datagrid_service')->getDataGrid("AcmeDynamicFormBundle:Field",$page,$limit);
+        $orderBy=$request->query->get('orderBy')?$request->query->get('orderBy'):null;
+        $dir=$request->query->get('dir')?$request->query->get('dir'):null;
+      $dataGrid=$this->get('service.datagrid.datagrid_service')->getDataGrid("AcmeDynamicFormBundle:Field",$page,$limit,$orderBy,$dir);
 
 
       return $this->render('AcmeDynamicFormBundle:Default:datagrid_index.html.twig', array('datagrid'=>$dataGrid));

@@ -63,7 +63,8 @@ class DataGridExtension extends \Twig_Extension {
       'total'=>$dataGrid->getTotalRows(),
       'totalPages'=>$dataGrid->getTotalPages(),
       'currentPage'=>$dataGrid->getCurrentpage(),
-      'currentLimit'=>$dataGrid->getCurrentLimit()
+      'currentLimit'=>$dataGrid->getCurrentLimit(),
+        'limitList'=>$dataGrid->getLimits()
     ));
   }
 
