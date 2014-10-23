@@ -1,0 +1,80 @@
+{% block grid %}
+
+
+<div>
+
+  <table>
+    <tr>{{ datagrid_header(dg) }}</tr>
+    {{ datagrid_rows(dg)}}
+  </table>
+</div>
+
+
+<div>
+  {{ datagrid_pagination(dg) }}
+
+</div>
+
+
+{% endblock grid %}
+
+{% block grid_rows %}
+
+{% for row in rowData %}
+
+  <tr>
+    {% for col in row %}
+      <td>{{ col }}</td>
+    {% endfor %}
+  </tr>
+
+{% endfor %}
+
+{% endblock grid_rows %}
+
+
+{% block grid_header %}
+
+  {% for h in headerData %}
+
+    <th>
+      {{ h.fieldName }}
+    </th>
+
+  {% endfor %}
+
+{% endblock grid_header %}
+
+{% block grid_pagination %}
+  <script>
+    $(function() {
+      dataGrid.currentPage={{ currentPage }};
+      dataGrid.limit={{ currentLimit }};
+    });
+  </script>
+
+  <div>
+
+
+    <span>{{ total }} Results</span>
+    <span>
+      Page
+      <input type="button" value="<" onclick=" return dataGrid.goToPrevPage() ">
+       <input type="text" value="{{ currentPage }}" onkeypress="return dataGrid.goToPage(event,parseInt(this.value))">
+      <input type="button" value=">" onclick=" return dataGrid.goToNextPage() ">
+      of <span>{{ totalPages }}</span>
+    </span>
+    {#<p>#}
+      {#Display#}
+      {#<select>#}
+        {#<option va></option>#}
+        {##}
+      {#</select>#}
+      {##}
+    {#</p>#}
+
+
+  </div>
+
+
+{% endblock grid_pagination %}

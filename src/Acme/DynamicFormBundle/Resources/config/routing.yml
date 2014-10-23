@@ -1,3 +1,6 @@
 acme_dynamic_form_homepage:
     path:     /hello/
     defaults: { _controller: AcmeDynamicFormBundle:Default:index }
+acme_dynamic_form_datagrid:
+    path:     /datagrid/
+    defaults: { _controller: AcmeDynamicFormBundle:DataGrid:index }

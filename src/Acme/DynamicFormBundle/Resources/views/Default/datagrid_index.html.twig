@@ -1,0 +1,21 @@
+{% extends 'AcmeDynamicFormBundle::base.html.twig' %}
+
+{% block title %}Data Grid Demo{% endblock %}
+
+
+{#{% block stylesheets %}#}
+  {#{{ parent() }}#}
+{#{% endblock %}#}
+
+
+
+{% block body %}
+{{ datagrid(datagrid)}}
+
+  {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/data-grid.js') }}"></script>
+  {% endblock %}
+
+{% endblock %}
+
