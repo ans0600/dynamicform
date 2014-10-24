@@ -11,6 +11,8 @@ namespace Acme\DataGridBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Sample entity used for testing only
+ *
  * @ORM\Entity
  * @ORM\Table(name="test_user_address")
  */

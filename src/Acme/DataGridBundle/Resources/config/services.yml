@@ -3,6 +3,7 @@ parameters:
   dataGridTemplateName: AcmeDataGridBundle:Datagrid:blocks.html.twig
 
 services:
+
   acme.twig.datagrid_extension:
     class: Acme\DataGridBundle\Twig\Extension\DataGridExtension
     calls:

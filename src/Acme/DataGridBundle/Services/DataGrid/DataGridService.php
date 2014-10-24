@@ -35,23 +35,6 @@ class DataGridService
 
   }
 
-  public function getDataGrid($entityName, $currentPage = 1, $currentLimit = 10, $orderBy, $dir)
-  {
-    if ($currentLimit < 0) $currentLimit = 10;
-    if ($currentPage < 0) $currentPage = 1;
-    $this->currentLimit = $currentLimit;
-    $this->currentPage = $currentPage;
-    $this->currentOrder = $orderBy;
-    $this->currentDir = $dir;
-    $this->entityName = $entityName;
-    $this->entityService->init($entityName);
-    $this->fields = $this->entityService->getFieldMetadata();
-    $this->entityService->loadData($currentPage, $currentLimit, $orderBy, $dir);
-    $this->data = $this->entityService->toSimpleArray();
-
-    return $this;
-  }
-
   public function getData()
   {
     return $this->data;
@@ -110,6 +93,23 @@ class DataGridService
     }
     return $res;
 
+  }
+
+  public function getDataGrid($entityName, $currentPage = 1, $currentLimit = 10, $orderBy, $dir)
+  {
+    if ($currentLimit < 0) $currentLimit = 10;
+    if ($currentPage < 0) $currentPage = 1;
+    $this->currentLimit = $currentLimit;
+    $this->currentPage = $currentPage;
+    $this->currentOrder = $orderBy;
+    $this->currentDir = $dir;
+    $this->entityName = $entityName;
+    $this->entityService->init($entityName);
+    $this->fields = $this->entityService->getFieldMetadata();
+    $this->entityService->loadData($currentPage, $currentLimit, $orderBy, $dir);
+    $this->data = $this->entityService->toSimpleArray();
+
+    return $this;
   }
 
 

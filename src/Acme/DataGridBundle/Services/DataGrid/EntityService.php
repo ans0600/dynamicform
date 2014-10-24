@@ -50,7 +50,7 @@ class EntityService {
   public function getTotalDataCount()
   {
     /**
-     * @var $em \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     $em=$this->doctrine->getManager();
 
@@ -66,7 +66,7 @@ class EntityService {
   public function loadData($page=1,$limit=100,$orderBy,$dir)
   {
     /**
-     * @var $em \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     $em=$this->doctrine->getManager();
 
