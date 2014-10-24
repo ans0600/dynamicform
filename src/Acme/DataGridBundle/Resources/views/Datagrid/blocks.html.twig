@@ -1,0 +1,95 @@
+{% block grid %}
+
+
+  <div class="row">
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3>
+      </div>
+
+      <table class="table">
+        <tr>{{ datagrid_header(dg) }}</tr>
+        {{ datagrid_rows(dg) }}
+      </table>
+    </div>
+  </div>
+
+
+  <div>
+    {{ datagrid_pagination(dg) }}
+
+  </div>
+
+
+{% endblock grid %}
+
+{% block grid_rows %}
+
+  {% for row in rowData %}
+    <tbody>
+    <tr>
+      {% for col in row %}
+        <td>{{ col }}</td>
+      {% endfor %}
+    </tr>
+    </tbody>
+
+  {% endfor %}
+
+{% endblock grid_rows %}
+
+
+{% block grid_header %}
+  <thead>
+  {% for h in headerData %}
+
+    <th class="order-header" fieldName="{{ h.fieldName }}" onclick="return dataGrid.orderBy('{{ h.fieldName }}')">
+      {{ h.fieldName }}
+    </th>
+
+
+  {% endfor %}
+  </thead>
+
+{% endblock grid_header %}
+
+{% block grid_pagination %}
+  <script>
+    $(function () {
+      dataGrid.currentPage ={{ currentPage }};
+      dataGrid.limit ={{ currentLimit }};
+      dataGrid.order = "{{ currentOrder }}";
+      dataGrid.dir = "{{ currentDir }}";
+    });
+  </script>
+
+  <div>
+
+    <span>{{ total }} Results</span>
+    <span>
+      Page
+      <input type="button" value="<" onclick=" return dataGrid.goToPrevPage() ">
+       <input type="text" value="{{ currentPage }}" onkeypress="return dataGrid.goToPage(event,parseInt(this.value))">
+      <input type="button" value=">" onclick=" return dataGrid.goToNextPage() ">
+      of <span>{{ totalPages }}</span>
+    </span>
+    <span>
+      Display
+      <select onchange="return dataGrid.changeLimit(this.value)">
+
+        {% for limit,selected in limitList %}
+
+          <option value="{{ limit }}" {{ selected? 'selected="selected"':'' }}" >{{ limit }}</option>
+        {% endfor %}
+
+      </select>
+
+    </span>
+
+
+  </div>
+
+
+{% endblock grid_pagination %}

@@ -1,20 +1,18 @@
-var dataGrid= {
+var dataGrid = {
 
-  currentPage:1,
-  limit:10,
-    order:null,
-    dir:"desc",
+  currentPage: 1,
+  limit: 10,
+  order: null,
+  dir: "desc",
 
 
-  buildQueryStr: function()
-  {
-    var url= "?page="+this.currentPage+"&limit="+this.limit;
-      if(this.order&&this.dir)url+="&orderBy="+this.order+"&dir="+this.dir;
-      return url;
+  buildQueryStr: function () {
+    var url = "?page=" + this.currentPage + "&limit=" + this.limit;
+    if (this.order && this.dir)url += "&orderBy=" + this.order + "&dir=" + this.dir;
+    return url;
   },
 
-  isEnterKey: function(event)
-  {
+  isEnterKey: function (event) {
 
     key = event.which;
 
@@ -22,63 +20,83 @@ var dataGrid= {
       key = window.event.keyCode; //IE
     }
     console.log(key);
-    if(key==13)
-    {
+    if (key == 13) {
       return true;
     }
     return false;
   },
 
-  goToPrevPage: function()
-  {
+  goToPrevPage: function () {
 
-    this.goToPage(null,--this.currentPage);
+    this.goToPage(null, --this.currentPage);
 
   },
 
-  goToNextPage: function()
-  {
-    this.goToPage(null,++this.currentPage);
+  goToNextPage: function () {
+    this.goToPage(null, ++this.currentPage);
   },
 
-  goToPage: function(event,pageNumber)
-  {
-    if(event&&!this.isEnterKey(event))return;
-    this.currentPage=pageNumber;
+  goToPage: function (event, pageNumber) {
+    if (event && !this.isEnterKey(event))return;
+    this.currentPage = pageNumber;
 
-    var currentUrl=window.location.pathname;
+    var currentUrl = window.location.pathname;
 
-    currentUrl=currentUrl.split("?")[0];
+    currentUrl = currentUrl.split("?")[0];
     console.log("Go To Page!!");
 
-    window.location=currentUrl+this.buildQueryStr();
+    window.location = currentUrl + this.buildQueryStr();
   },
 
-  changeLimit: function(limit)
-  {
-      this.limit=limit;
-      var currentUrl=window.location.pathname;
+  changeLimit: function (limit) {
+    this.limit = limit;
+    var currentUrl = window.location.pathname;
 
-      currentUrl=currentUrl.split("?")[0];
-      console.log("changeLimit!!");
+    currentUrl = currentUrl.split("?")[0];
+    console.log("changeLimit!!");
 
-      window.location=currentUrl+this.buildQueryStr();
+    window.location = currentUrl + this.buildQueryStr();
   },
 
-  orderBy: function(order)
-  {
+  orderBy: function (order) {
 
-      this.order=order;
+    this.order = order;
 
-      console.log(this.dir+" "+this.order);
+    if(!this.dir)this.dir="asc";
+    else if(this.dir=="asc")this.dir="desc";
+    else if(this.dir=="desc")this.dir="asc";
 
-      var currentUrl=window.location.pathname;
+    console.log(this.dir + " " + this.order);
 
-      currentUrl=currentUrl.split("?")[0];
-      console.log("GOrder By!!");
+    var currentUrl = window.location.pathname;
 
-      window.location=currentUrl+this.buildQueryStr();
+    currentUrl = currentUrl.split("?")[0];
+    console.log("GOrder By!!");
+
+    window.location = currentUrl + this.buildQueryStr();
 
   }
 
 }
+
+$(function(){
+
+  $('.order-header').each(function(index,value){
+    console.log($(value).attr('fieldName'))
+
+    if($(value).attr('fieldName')==dataGrid.order)
+    {
+      if(dataGrid.dir=="asc")
+      {
+        $(value).addClass('order-asc');
+
+      }else
+      {
+        $(value).addClass('order-desc');
+      }
+
+    }
+
+  });
+
+});

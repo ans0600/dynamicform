@@ -1,4 +1,4 @@
-acme_dynamic_form:
-    resource: "@AcmeDynamicFormBundle/Resources/config/routing.yml"
+acme_data_grid_demo:
+    resource: "@AcmeDataGridDemoBundle/Resources/config/routing.yml"
     prefix:   /
 
