@@ -1,116 +1,103 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: frank
- * Date: 10/23/14
- * Time: 9:06 AM
- */
 
 namespace Acme\DataGridBundle\Services\DataGrid;
 
 
+use Acme\DataGridBundle\Services\Request\BaseDataGridRequest;
+
 class DataGridService
 {
 
+    private $fields;
 
-  private $fields;
+    private $data;
 
-  private $data;
+    private $entityService;
 
-  private $entityService;
+    /**
+     * @var Acme\DynamicFormBundle\Services\Request\DataGridRequest
+     */
+    private $requestObj;
 
-  private $currentLimit;
+    private $entityName;
 
-  private $currentPage;
+    public function __construct($entityService)
+    {
+        $this->entityService = $entityService;
 
-  private $currentOrder;
-
-  private $currentDir;
-
-  private $entityName;
-
-  public function __construct($entityService)
-  {
-    $this->entityService = $entityService;
-
-  }
-
-  public function getData()
-  {
-    return $this->data;
-  }
-
-  public function getFields()
-  {
-    return $this->fields;
-  }
-
-  public function getTotalRows()
-  {
-    return $this->entityService->getTotalDataCount();
-
-  }
-
-  public function getTotalPages()
-  {
-    return ceil($this->getTotalRows() / $this->currentLimit);
-  }
-
-
-  public function getCurrentpage()
-  {
-    return $this->currentPage;
-  }
-
-  public function getCurrentLimit()
-  {
-    return $this->currentLimit;
-  }
-
-  public function getCurrentOrder()
-  {
-    return $this->currentOrder;
-  }
-
-  public function getCurrentDir()
-  {
-    return $this->currentDir;
-  }
-
-  public function getEntityName()
-  {
-    return $this->entityName;
-  }
-
-  public function getLimits()
-  {
-    $arr = array(10, 20, 50, 100);
-
-    $res = array();
-
-    foreach ($arr as $r) {
-      $res[$r] = $this->currentLimit == $r;
     }
-    return $res;
 
-  }
+    public function getData()
+    {
+        return $this->data;
+    }
 
-  public function getDataGrid($entityName, $currentPage = 1, $currentLimit = 10, $orderBy, $dir)
-  {
-    if ($currentLimit < 0) $currentLimit = 10;
-    if ($currentPage < 0) $currentPage = 1;
-    $this->currentLimit = $currentLimit;
-    $this->currentPage = $currentPage;
-    $this->currentOrder = $orderBy;
-    $this->currentDir = $dir;
-    $this->entityName = $entityName;
-    $this->entityService->init($entityName);
-    $this->fields = $this->entityService->getFieldMetadata();
-    $this->entityService->loadData($currentPage, $currentLimit, $orderBy, $dir);
-    $this->data = $this->entityService->toSimpleArray();
+    public function getFields()
+    {
+        return $this->fields;
+    }
 
-    return $this;
-  }
+    public function getTotalRows()
+    {
+        return $this->entityService->getTotalDataCount();
+
+    }
+
+    public function getTotalPages()
+    {
+        return ceil($this->getTotalRows() / $this->requestObj->getData('limit'));
+    }
+
+
+    public function getCurrentpage()
+    {
+        return $this->requestObj->getData('page');
+    }
+
+    public function getCurrentLimit()
+    {
+        return $this->requestObj->getData('limit');
+    }
+
+    public function getCurrentOrder()
+    {
+        return $this->requestObj->getData('order');
+    }
+
+    public function getCurrentDir()
+    {
+        return $this->requestObj->getData('dir');
+    }
+
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    public function getLimits()
+    {
+        //TODO Put limit value in parameter list
+        $arr = array(10, 20, 50, 100);
+
+        $res = array();
+
+        foreach ($arr as $r) {
+            $res[$r] = $this->getCurrentLimit() == $r;
+        }
+        return $res;
+
+    }
+
+    public function getDataGrid($entityName,BaseDataGridRequest $request)
+    {
+        $this->requestObj=$request;
+        $this->entityName = $entityName;
+        $this->entityService->init($entityName);
+        $this->fields = $this->entityService->getFieldMetadata();
+        $this->entityService->loadData($request);
+        $this->data = $this->entityService->toSimpleArray();
+        return $this;
+    }
 
 
 }

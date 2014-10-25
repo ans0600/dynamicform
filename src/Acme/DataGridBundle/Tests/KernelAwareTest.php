@@ -5,6 +5,7 @@ namespace Acme\DataGridBundle\Tests;
 require_once dirname(__DIR__).'/../../../app/AppKernel.php';
 
 /**
+ * Kernel Aware Test Base Class from https://gist.github.com/jakzal/1319290
  * Test case class helpful with Entity tests requiring the database interaction.
  * For regular entity tests it's better to extend standard \PHPUnit_Framework_TestCase instead.
  */
@@ -47,9 +48,6 @@ abstract class KernelAwareTest extends \PHPUnit_Framework_TestCase
 
   }
 
-  /**
-   * @return null
-   */
   public function tearDown()
   {
     $this->kernel->shutdown();
@@ -57,9 +55,7 @@ abstract class KernelAwareTest extends \PHPUnit_Framework_TestCase
     parent::tearDown();
   }
 
-  /**
-   * @return null
-   */
+
   protected function generateSchema()
   {
     $metadatas = $this->getMetadatas();

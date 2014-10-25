@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: frank
- * Date: 10/24/14
- * Time: 11:52 AM
- */
 
 namespace Acme\DataGridBundle\Services\Utils;
 

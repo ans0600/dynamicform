@@ -11,10 +11,11 @@ services:
     tags:
       - { name: twig.extension }
 
-  services.datagrid.entity_service:
+  datagrid.entity_service:
     class: Acme\DataGridBundle\Services\DataGrid\EntityService
     arguments: [@doctrine]
 
-  service.datagrid.datagrid_service:
+  datagrid.datagrid_service:
     class: Acme\DataGridBundle\Services\DataGrid\DataGridService
-    arguments: [@services.datagrid.entity_service]
+    arguments: [@datagrid.entity_service]
+
